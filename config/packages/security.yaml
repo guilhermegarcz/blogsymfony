@@ -1,0 +1,57 @@
+security:
+    encoders:
+        App\Entity\User: auto
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        database_users:
+            entity: {class: App\Entity\User, property: username}
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            pattern: ^/
+
+            form_login:
+                check_path: auth_login
+                login_path: auth_login
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: article_index
+                use_referer: true
+
+            logout:
+                path: auth_logout
+                target: article_index
+
+            guard:
+                authenticators:
+                    - App\Security\GoogleAuthenticator
+
+
+            #    always_use_default_target_path: false
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
+knpu_oauth2_client:
+    clients:
+        google:
+            # must be "google" - it activates that type!
+            type: google
+            # add and configure client_id and client_secret in parameters.yml
+            client_id: '%env(resolve:GOOGLE_CLIENT_ID)%'
+            client_secret: '%env(resolve:GOOGLE_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_google_check
+            redirect_params: {}

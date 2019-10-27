@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row mt-5">
+        <div class="col-lg-8 offset-2">
+            {% if article.thumbnail is not null %}
+                <div class="article-image" style="background: url('{{ asset('uploads/article/'~article.thumbnail)  }}'); background-size: cover;"></div>
+            {% endif %}
+            <div class="article{% if article.thumbnail is not null %} article-has-img{% endif %}">
+                <div>
+                    {{ include("includes/article.html.twig", {'article': article}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

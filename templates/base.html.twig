@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Blog{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+</head>
+<body>
+{{ include("includes/navbar.html.twig") }}
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+
+
+{% block javascripts %}{% endblock %}
+<script src="{{ asset('build/js/app.js') }}"></script>
+</body>
+</html>

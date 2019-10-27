@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Admin Area
+{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                {% for message in app.flashes("notice") %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-8">
+                <div class="table-articles">
+                    <div class="mb-2">
+                        <div class="float-left">
+                            <h4>Articles</h4>
+                        </div>
+                        <div class="float-right">
+                            <a href="{{ path('article_add') }}" class="btn btn-primary">Add new article</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Tags</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <th scope="row">{{ article.id }}</th>
+                                <td>{{ article.title }}</td>
+                                <td>{% for tag in article.tags %}{{ tag.name }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                                <td class="table-action">
+                                    <div class="float-right">
+                                        <a href="{{ path('article_show', {'id':article.id}) }}" class="btn btn-secondary">View</a>
+                                        <a href="{{ path('article_edit', {'id':article.id}) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ path('article_delete', {'id':article.id}) }}" class="btn btn-danger">Delete</a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="table-articles">
+                    <div class="mb-2">
+                        <div class="float-left">
+                            <h4>Tags</h4>
+                        </div>
+                        <div class="float-right">
+                            <a href="{{ path('tag_add') }}" class="btn btn-primary">Add new tag</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tag in tags %}
+                            <tr>
+                                <th scope="row">{{ tag.id }}</th>
+                                <td>{{ tag.name }}</td>
+                                <td class="table-action-tag">
+                                    <div class="float-right">
+                                        <a href="{{ path('tag_edit', {'id':tag.id}) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ path('tag_delete', {'id':tag.id}) }}" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

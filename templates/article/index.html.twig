@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-8 offset-2 mb-5">
+            {% if is_granted("ROLE_ADMIN") and not is_granted("oauth2") %}
+                <div class="alert alert-warning">
+                    To be able to use admin features please login with Google.
+                </div>
+            {% endif %}
+            {% for message in app.flashes("notice") %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% if articles is empty %}
+            <div class="col-lg-8 offset-2">
+                <div class="article">
+                    <div class="text-center">
+                        <h2>There are no articles</h2>
+                        <div class="mt-5 mb-5 svg-color">
+                            {{ include('includes/svg/sad.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% for article in articles %}
+            <div class="col-lg-8 offset-2 mb-5">
+                {% if article.thumbnail is not null %}
+                    <div class="article-image" style="background: url('{{ asset('uploads/article/'~article.thumbnail)  }}'); background-size: cover;"></div>
+                {% endif %}
+                <div class="article{% if article.thumbnail is not null %} article-has-img{% endif %}">
+                    <div>
+                        <h1>{{ article.title }}</h1>
+                        <p>{{ article.date|date("d/m/Y") }} by <a href="{{ path('article_user', {'username':article.user.username}) }}">{{ article.user.username }}</a></p>
+                    </div>
+                    <a href="{{ path('article_show', {'id': article.id}) }}" class="btn btn-primary">Read more</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

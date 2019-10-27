@@ -1,0 +1,41 @@
+body{
+    background: #222529 !important;
+}
+.article,.authform {
+    background: #121315;
+    border-radius: 5px;
+    padding: 25px;
+}
+.article div,.table-articles table, .table-articles h4, .authform div {
+    color: #7e8f9c;
+}
+div#article_tags{
+    display: flex;
+}
+div#article_tags div{
+    margin: 10px;
+}
+.table-articles {
+    background: #121315;
+    padding: 25px;
+    border-radius: 10px;
+}
+.btn-full{
+    width:100%;
+}
+
+.svg-color svg{
+    fill: #7e8f9c;
+}
+
+.article-image{
+    height: 200px;
+    border-radius: 5px 5px 0 0;
+}
+.article-has-img{
+    border-radius: 0 0 5px 5px !important;
+}
+
+.table-action {
+    min-width: 230px;
+}
