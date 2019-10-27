@@ -3,8 +3,8 @@ Simple Blog using Symfony 4 framework
 
 # Setup
 ```shell script
-$ git clone git@github.com:guilhermegarcz/symfonyblog.git
-$ cd symfonyblog
+$ git clone git@github.com:guilhermegarcz/blogsymfony.git
+$ cd blogsymfony
 ```
 Update the .env file, you can either use .env.example (rename to .env and update the config) or create a new one with this base
 ```dotenv
