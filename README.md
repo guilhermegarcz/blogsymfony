@@ -28,5 +28,5 @@ $ php bin/console doctrine:database:create
 $ php bin/console doctrine:migrations:migrate
 $ php bin/console cache:clear
 ```
-#### Note
-For dev environment you can use fixtures to populate the database
+
+When Installed go to __WebsiteURL/install__ to create an admin account and generate some dummy articles
