@@ -11,6 +11,7 @@ Update the .env file, you can either use .env.example (rename to .env and update
 APP_ENV=prod
 APP_DEBUG=0
 
+#see https://developers.google.com/identity/protocols/OAuth2 for key
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
