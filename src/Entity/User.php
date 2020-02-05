@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="username", message="This username is already in use")
  * @UniqueEntity(fields="email", message="This email is already in use")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, Serializable
 {
     const ROLE_USER = 'ROLE_USER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -76,11 +77,6 @@ class User implements UserInterface, \Serializable
         return $this->articles;
     }
 
-    public function setUsername($username): void
-    {
-        $this->username = $username;
-    }
-
     public function getRoles()
     {
         return $this->roles;
@@ -134,17 +130,24 @@ class User implements UserInterface, \Serializable
         return $this->username;
     }
 
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
     public function eraseCredentials()
     {
     }
 
     public function serialize()
     {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password
-        ]);
+        return serialize(
+            [
+                $this->id,
+                $this->username,
+                $this->password,
+            ]
+        );
 
     }
 

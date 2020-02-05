@@ -26,11 +26,11 @@ class ArticleVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if(!in_array($attribute, [self::EDIT, self::DELETE])){
+        if (!in_array($attribute, [self::EDIT, self::DELETE])) {
             return false;
         }
 
-        if(!$subject instanceof Article){
+        if (!$subject instanceof Article) {
             return false;
         }
 
@@ -39,12 +39,12 @@ class ArticleVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        if($this->accessDecisionManager->decide($token, [User::ROLE_ADMIN])){
+        if ($this->accessDecisionManager->decide($token, [User::ROLE_ADMIN])) {
             return true;
         }
         $authenticatedUser = $token->getUser();
 
-        if(!$authenticatedUser instanceof User){
+        if (!$authenticatedUser instanceof User) {
             return false;
         }
         /**

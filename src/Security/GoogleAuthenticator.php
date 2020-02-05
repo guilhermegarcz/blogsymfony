@@ -3,15 +3,17 @@
 
 namespace App\Security;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use KnpU\OAuth2ClientBundle\Client\OAuth2Client;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use League\OAuth2\Client\Provider\GoogleUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -40,6 +42,15 @@ class GoogleAuthenticator extends SocialAuthenticator
         return $this->fetchAccessToken($this->getGoogleClient());
     }
 
+    /**
+     * @return OAuth2Client
+     */
+    private function getGoogleClient()
+    {
+        return $this->clientRegistry
+            ->getClient('google');
+    }
+
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         /** @var GoogleUser $googleUser */
@@ -52,15 +63,6 @@ class GoogleAuthenticator extends SocialAuthenticator
             ->findOneBy(['email' => $email]);
 
         return $user;
-    }
-
-    /**
-     * @return \KnpU\OAuth2ClientBundle\Client\OAuth2Client
-     */
-    private function getGoogleClient()
-    {
-        return $this->clientRegistry
-            ->getClient('google');
     }
 
     /**
@@ -77,12 +79,14 @@ class GoogleAuthenticator extends SocialAuthenticator
      *      return new Response('Auth header required', 401);
      *
      * @param Request $request The request that resulted in an AuthenticationException
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $authException The exception that started the authentication process
+     * @param AuthenticationException $authException The exception that started the authentication process
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function start(Request $request, \Symfony\Component\Security\Core\Exception\AuthenticationException $authException = null)
-    {
+    public function start(
+        Request $request,
+        AuthenticationException $authException = null
+    ) {
         return new RedirectResponse('/login');
     }
 
@@ -96,12 +100,14 @@ class GoogleAuthenticator extends SocialAuthenticator
      * not be authenticated. This is probably not what you want to do.
      *
      * @param Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
+     * @param AuthenticationException $exception
      *
-     * @return \Symfony\Component\HttpFoundation\Response|null
+     * @return Response|null
      */
-    public function onAuthenticationFailure(Request $request, \Symfony\Component\Security\Core\Exception\AuthenticationException $exception)
-    {
+    public function onAuthenticationFailure(
+        Request $request,
+        AuthenticationException $exception
+    ) {
         // TODO: Implement onAuthenticationFailure() method.
     }
 
@@ -115,13 +121,16 @@ class GoogleAuthenticator extends SocialAuthenticator
      * will be authenticated. This makes sense, for example, with an API.
      *
      * @param Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
+     * @param TokenInterface $token
      * @param string $providerKey The provider (i.e. firewall) key
      *
      * @return void
      */
-    public function onAuthenticationSuccess(Request $request, \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token, $providerKey)
-    {
+    public function onAuthenticationSuccess(
+        Request $request,
+        TokenInterface $token,
+        $providerKey
+    ) {
         $session = new Session();
 
         $session->set('oauth', true);

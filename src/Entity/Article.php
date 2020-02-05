@@ -48,17 +48,6 @@ class Article
      * @ORM\Column(type="string", nullable=true)
      */
     private $thumbnail;
-
-    public function getThumbnail()
-    {
-        return $this->thumbnail;
-    }
-
-    public function setThumbnail($thumbnail): void
-    {
-        $this->thumbnail = $thumbnail;
-    }
-
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="article")
      * @ORM\JoinTable(name="articleTags",
@@ -77,6 +66,15 @@ class Article
         $this->tags = new ArrayCollection();
     }
 
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail($thumbnail): void
+    {
+        $this->thumbnail = $thumbnail;
+    }
 
     public function getId(): ?int
     {
@@ -91,14 +89,14 @@ class Article
         return $this->user;
     }
 
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
     public function setUser($user): void
     {
         $this->user = $user;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 
     public function getDate()

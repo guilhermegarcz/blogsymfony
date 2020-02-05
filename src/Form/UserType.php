@@ -21,27 +21,41 @@ class UserType extends AbstractType
     {
         $builder->add("username", TextType::class)
             ->add("email", TextType::class)
-            ->add("plainPassword", RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => ['label' => "Password"],
-                'second_options' => ['label' => "Password Confirmation"]
-            ])
-            ->add('termsAgreed', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => new IsTrue(),
-                'label' => 'I agree with the Terms of Service'
-            ])
-            ->add("register", SubmitType::class, [
-                'attr' => ['class' => 'btn btn-primary btn-full'],
-            ]);
+            ->add(
+                "plainPassword",
+                RepeatedType::class,
+                [
+                    'type' => PasswordType::class,
+                    'first_options' => ['label' => "Password"],
+                    'second_options' => ['label' => "Password Confirmation"],
+                ]
+            )
+            ->add(
+                'termsAgreed',
+                CheckboxType::class,
+                [
+                    'mapped' => false,
+                    'constraints' => new IsTrue(),
+                    'label' => 'I agree with the Terms of Service',
+                ]
+            )
+            ->add(
+                "register",
+                SubmitType::class,
+                [
+                    'attr' => ['class' => 'btn btn-primary btn-full'],
+                ]
+            );
 
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => User::class
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => User::class,
+            ]
+        );
     }
 
 

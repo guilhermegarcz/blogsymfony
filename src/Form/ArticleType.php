@@ -21,35 +21,48 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add("title", TextType::class)
-                ->add("text", TextareaType::class, ['label' => "Body"])
-                ->add('thumbnail', FileType::class, [
+            ->add("text", TextareaType::class, ['label' => "Body"])
+            ->add(
+                'thumbnail',
+                FileType::class,
+                [
                     'label' => 'Article Thumbnail (PNG, JPG, GIF)',
                     'mapped' => false,
                     'required' => false,
                     'constraints' => [
-                        new File([
-                            'maxSize' => '4m',
-                            'mimeTypes' => [
-                                'image/jpeg',
-                                'image/png',
-                                'image/gif'
-                            ],
-                            'mimeTypesMessage' => 'Please upload a valid thumbnail',
-                        ])
+                        new File(
+                            [
+                                'maxSize' => '4m',
+                                'mimeTypes' => [
+                                    'image/jpeg',
+                                    'image/png',
+                                    'image/gif',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid thumbnail',
+                            ]
+                        ),
                     ],
-                ])
-                ->add('tags', EntityType::class, array(
+                ]
+            )
+            ->add(
+                'tags',
+                EntityType::class,
+                array(
                     'class' => Tag::class,
                     'multiple' => true,
                     'expanded' => true,
-                ))
-                ->add("save", SubmitType::class);
+                )
+            )
+            ->add("save", SubmitType::class);
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Article::class
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Article::class,
+            ]
+        );
     }
 
 }

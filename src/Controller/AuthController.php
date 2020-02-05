@@ -17,24 +17,29 @@ class AuthController extends AbstractController
     /**
      * @Route("/login", name="auth_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils){
+    public function login(AuthenticationUtils $authenticationUtils)
+    {
 
-        return $this->render("auth/login.html.twig", [
-            'googleauth' => (!empty($_SERVER["GOOGLE_CLIENT_ID"]) && !empty($_SERVER["GOOGLE_CLIENT_SECRET"])),
-            'last_username' => $authenticationUtils->getLastUsername(),
-            'error' => $authenticationUtils->getLastAuthenticationError()
-        ]);
+        return $this->render(
+            "auth/login.html.twig",
+            [
+                'googleauth' => (!empty($_SERVER["GOOGLE_CLIENT_ID"]) && !empty($_SERVER["GOOGLE_CLIENT_SECRET"])),
+                'last_username' => $authenticationUtils->getLastUsername(),
+                'error' => $authenticationUtils->getLastAuthenticationError(),
+            ]
+        );
     }
 
     /**
      * @Route("/register", name="auth_register")
      */
-    public function register(UserPasswordEncoderInterface $passwordEncoder, Request $request){
+    public function register(UserPasswordEncoderInterface $passwordEncoder, Request $request)
+    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setRoles(['ROLE_USER']);
@@ -49,16 +54,20 @@ class AuthController extends AbstractController
             return $this->redirectToRoute("auth_login");
         }
 
-        return $this->render("auth/register.html.twig", [
-            'form' => $form->createView()
-        ]);
+        return $this->render(
+            "auth/register.html.twig",
+            [
+                'form' => $form->createView(),
+            ]
+        );
 
     }
 
     /**
      * @Route("/logout", name="auth_logout")
      */
-    public function logout(){
+    public function logout()
+    {
         //handled by symfony, check security.yaml
     }
 

@@ -35,6 +35,7 @@ class UserProvider implements UserProviderInterface
                 sprintf('Instances of "%s" are not supported.', get_class($user))
             );
         }
+
         return $user;
     }
 

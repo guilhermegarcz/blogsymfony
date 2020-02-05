@@ -25,8 +25,9 @@ class AdminVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if(!in_array($attribute, [self::OAUTH]))
+        if (!in_array($attribute, [self::OAUTH])) {
             return false;
+        }
 
         return true;
     }
@@ -36,8 +37,9 @@ class AdminVoter extends Voter
         $google_id = $this->params->get('google_client_id');
         $google_secret = $this->params->get('google_client_secret');
 
-        if(empty($google_id) || empty($google_secret))
+        if (empty($google_id) || empty($google_secret)) {
             return true;
+        }
 
         $session = new Session();
 

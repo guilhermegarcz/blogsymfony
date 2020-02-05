@@ -11,7 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("api")
  */
-class ApiController extends AbstractController{
+class ApiController extends AbstractController
+{
 
     /**
      * @Route("/blogs")
@@ -20,17 +21,17 @@ class ApiController extends AbstractController{
     {
         $repository = $this->getDoctrine()->getRepository(Article::class);
 
-        $articles = $repository->findBy([], ['id'=> 'DESC']);
+        $articles = $repository->findBy([], ['id' => 'DESC']);
 
         $articleArray = [];
 
         /**
          * @var Article $article
          */
-        foreach ($articles as $id => $article){
+        foreach ($articles as $id => $article) {
             $articleArray[] = [
-                'id'=>$article->getId(),
-                'title'=>$article->getTitle(),
+                'id' => $article->getId(),
+                'title' => $article->getTitle(),
             ];
         }
 
@@ -46,19 +47,20 @@ class ApiController extends AbstractController{
         /**
          * @var Tag $tag
          */
-        foreach ($article->getTags() as $tag){
+        foreach ($article->getTags() as $tag) {
             $tags[] = [
                 'id' => $tag->getId(),
-                'name' => $tag->getName()
+                'name' => $tag->getName(),
             ];
         }
 
         $articleArray = [
-            'id'=>$article->getId(),
-            'title'=>$article->getTitle(),
-            'text'=>$article->getText(),
-            'tags'=>$tags,
+            'id' => $article->getId(),
+            'title' => $article->getTitle(),
+            'text' => $article->getText(),
+            'tags' => $tags,
         ];
+
         return $articleArray;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 
@@ -15,11 +16,12 @@ class GoogleController extends AbstractController
      */
     public function connectAction(ClientRegistry $clientRegistry)
     {
-        if(!empty($_SERVER["GOOGLE_CLIENT_ID"]) && !empty($_SERVER["GOOGLE_CLIENT_SECRET"])){
+        if (!empty($_SERVER["GOOGLE_CLIENT_ID"]) && !empty($_SERVER["GOOGLE_CLIENT_SECRET"])) {
             return $clientRegistry
                 ->getClient('google')
                 ->redirect();
         }
+
         return $this->redirectToRoute("auth_login");
     }
 
@@ -30,6 +32,7 @@ class GoogleController extends AbstractController
     {
         if (!$this->getUser()) {
             $this->addFlash('error', "User was not found");
+
             return $this->redirectToRoute('auth_login');
         } else {
             return $this->redirectToRoute('article_index');
