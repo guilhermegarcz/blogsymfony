@@ -16,6 +16,7 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/", name="article_index")
+     * @return Response
      */
     public function index()
     {
@@ -28,6 +29,8 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/article/{id}", name="article_show")
+     * @param Article $article
+     * @return Response
      */
     public function show(Article $article)
     {
@@ -36,6 +39,8 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/user/@{username}", name="article_user")
+     * @param User $userWithArticles
+     * @return Response
      */
     public function userArticles(User $userWithArticles)
     {

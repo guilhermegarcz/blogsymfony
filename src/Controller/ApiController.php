@@ -16,6 +16,7 @@ class ApiController extends AbstractController
 
     /**
      * @Route("/blogs")
+     * @return array
      */
     public function getArticles()
     {
@@ -40,6 +41,8 @@ class ApiController extends AbstractController
 
     /**
      * @Route("/blogs/{id}")
+     * @param Article $article
+     * @return array
      */
     public function getArticle(Article $article)
     {
@@ -54,14 +57,12 @@ class ApiController extends AbstractController
             ];
         }
 
-        $articleArray = [
+        return [
             'id' => $article->getId(),
             'title' => $article->getTitle(),
             'text' => $article->getText(),
             'tags' => $tags,
         ];
-
-        return $articleArray;
     }
 
 

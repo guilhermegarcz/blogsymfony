@@ -7,7 +7,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -16,6 +18,8 @@ class AuthController extends AbstractController
 {
     /**
      * @Route("/login", name="auth_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -32,6 +36,9 @@ class AuthController extends AbstractController
 
     /**
      * @Route("/register", name="auth_register")
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function register(UserPasswordEncoderInterface $passwordEncoder, Request $request)
     {

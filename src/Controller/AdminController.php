@@ -10,10 +10,13 @@ use App\Form\ArticleType;
 use App\Form\TagType;
 use App\Service\FileUploader;
 use DateTime;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -45,6 +48,10 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/article/add", name="article_add")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function addArticle(Request $request, FileUploader $fileUploader)
     {
@@ -83,6 +90,10 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/article/edit/{id}", name="article_edit")
+     * @param Article $article
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return RedirectResponse|Response
      */
     public function editArticle(Article $article, Request $request, FileUploader $fileUploader)
     {
@@ -116,6 +127,8 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/article/delete/{id}", name="article_delete")
+     * @param Article $article
+     * @return RedirectResponse
      */
     public function deleteArticle(Article $article)
     {
@@ -130,6 +143,8 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/tag/add", name="tag_add")
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function addTag(Request $request)
     {
@@ -160,6 +175,9 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/tag/edit/{id}", name="tag_edit")
+     * @param Tag $tag
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function editTag(Tag $tag, Request $request)
     {
@@ -186,6 +204,8 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/tag/delete/{id}", name="tag_delete")
+     * @param Tag $tag
+     * @return RedirectResponse
      */
     public function deleteTag(Tag $tag)
     {
